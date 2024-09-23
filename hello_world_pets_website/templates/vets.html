@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<!-- This code allows the website to be responsive (e.g. any size can be used.). Bootstrap
+	is built for mobile websites first, so we need to make sure that my website will scale
+	no matter what type of device is being used. I found this code here:
+	https://getbootstrap.com/docs/4.5/getting-started/introduction/
+-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- I will be using Bootstrap to style my website. This chunck of link code
+		 is pulling in the bootstrap styling, which I plan on using.
+	 -->
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<!-- Using Font Awesome for Icons. I also learned this from Colt Steel's Udemy course
+       You need to include their CDN in order to use their icons. The icons I will be 
+       using here are for LinkedIn and Github.
+	-->
+	<script src="https://kit.fontawesome.com/f84faeb5a9.js" crossorigin="anonymous"></script>
+
+	<!-- Including my own CSS-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/classes.css')}}">
+
+		<title>Hello World Pets! - Vets</title>
+
+</head>
+
+<body>
+	<!-- This code below came from Bootstrap. It's what they call external content. it
+		allows me to create a navbar at the top of my webpage with an icon. This navbar will
+    have 4 links to direct users to each of the pages on my website.
+		The code can be found here:
+		https://getbootstrap.com/docs/4.5/components/navbar/?
+	-->
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+  		<a class="navbar-brand" href="#"><i class="fas fa-paw"></i>  HWP</sup></a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+  		</button>
+
+  		<div class="navbar-collapse offset collapse" id="navbarNav">
+    		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      			<li class="nav-item active">
+        			<a id="home" class="nav-link" href="index.html">Home</a>
+      			</li>
+            <li class="nav-item active">
+              <a id="home" class="nav-link" href="customers.html">Customers</a>
+            </li>
+      			<li class="nav-item">
+        			<a id="customers" class="nav-link" href="pets.html">Pets</a>
+      			</li>
+      			<li class="nav-item">
+        			<a id="classes" class="nav-link" href="classes.html"><span class="sr-only">(current)</span>Classes</a>
+      			</li>
+      			<li class="nav-item">
+        			<a id="vets" class="nav-link" href="vets.html">Vets</a>
+      			</li>
+      			<li class="nav-item">
+        			<a id="admin" class="nav-link" href="admin.html">Admin</a>
+      			</li>
+    		</ul>
+  		</div>
+	</nav>
+
+  <!-- Header -->
+  <div class="ClassHeader">
+    <h1 id="classId">Hello World Vets</h1>
+  </div>
+
+  <br>
+  <p class="text-center">Meet our team of expert veterinarians, ready to attend to every aspect of your pet's wellbeing during their time at Hello World Pets.</p>
+  <p class="text-center">You can find a vet by name, specialty, or the name of a pet currently in their care.</p>
+  <br>
+
+  <!-- This search functionality was created using Bootstrap cards. It 
+  	places the content nicely in a succinct container and allows the user
+  	to easily select what they're searching for.
+  	https://getbootstrap.com/docs/5.0/components/card/
+  -->
+  <div class="card">
+  <div class="card-header">
+    Search for a Vet
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Search By: </h5>
+    <form action="" method="post">
+    	<fieldset>
+    		<div class="form-check form-check-inline">
+    			<input class="form-check-input" type="radio" name="vetSearchType" value="vetFirstName" checked>
+  				<label class="form-check-label" for="vetFirstName">Vet First Name</label>
+  			</div>
+    		
+            <div class="form-check form-check-inline">
+    			<input class="form-check-input" type="radio" name="vetSearchType" value="vetLastName">
+  				<label class="form-check-label" for="vetLastName">Vet Last Name</label>
+  			</div>
+
+  			<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="vetSearchType" value="vetSpecialty">
+  				<label class="form-check-label" for="vetSpecialty">Vet Specialty</label>
+  			</div>
+
+  			<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="vetSearchType" value="petName">
+  				<label class="form-check-label" for="petName">Pet Name</label>
+  			</div>
+
+  			<div>
+                <input type="text" style="width: 400px;" name="vetSearchText">
+  				<button type="submit" class="btn btn-primary">Find Vets</button>
+  			</div>
+    	</fieldset>
+  	
+  	</div>
+</div>
+
+
+<!-- Add a simple table -->
+
+{% if rows is defined and rows|length %}
+<div class="contianer">
+	<h5 class="card-title">Vets</h5>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">First Name</th>
+				<th scope="col">Last Name</th>
+				<th scope="col">E-mail</th>
+				<th scope="col">Phone</th>
+				<th scope="col">Specialty</th>
+			</tr>
+		</thead>
+		<tbody>
+        {% for r in rows %}
+          <tr>
+            <th scope="row">{{r[0]}}</th>
+            <td>{{r[1]}}</td>
+            <td>{{r[2]}}</td>
+            <td>{{r[3]}}</td>
+            <td>{{r[4]}}</td>
+            <td>{{r[5]}}</td>
+          </tr>
+        {% endfor %}
+		</tbody>
+
+	</table>
+
+</div>
+{% else %}
+{% if rows is defined %}
+<div>
+    <p class="text-center">
+    No vet found.
+    </p>
+</div>
+{% endif %}
+{% endif %}
+
+  <!-- Jquery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap Javascript functionality to make things work -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+  <!-- Footer gets pushed down as content is added -->
+  <div class="footer">
+		<div class="container">
+  			<div id="footerRow" class="row">
+    			<div class="col-sm-4">
+      				Contact Us:
+    			</div>
+    			<div class="col-sm-4">
+      				<p>1234 Some Road, USA</p>
+    			</div>
+    			<div class="col-sm-4">
+      				<p>Phone: 123-456-7890</p>
+    			</div>
+  			</div>
+		</div>
+	</div>
+
+</body>
+
+
+</html>
