@@ -71,9 +71,9 @@ An **example** would look like this:
 
 ```python
 host = 'classmysql.engr.oregonstate.edu'
-user = 'cs340_hedaoos'
+user = 'cs340_limingx'
 passwd = '1234'
-db = 'cs340_hedaoos'
+db = 'cs340_liming'
 ```
 
 With that file renamed to `db_credentials.py` and the proper credentials added, we are almost ready to go.
